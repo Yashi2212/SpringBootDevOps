@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', 
+                    credentialsId: 'yashi12shukla@gmail.com', // Replace with your credential ID
+                    url: 'https://github.com/Yashi2212/SpringBootDevOps.git' // Replace with your Git repository URL
+            }
+        }
+        stage('Build with Maven') {
+            steps {
+                sh 'mvn clean package' // Executes Maven commands within the shell
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                sh 'mvn test' // Executes Maven tests
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: '*/.jar', fingerprint: true // Archives JAR files
+            buildDiscarder(logRetention: 5) // Keeps only the last 5 builds' logs
+        }
+        success {
+            // Optional: Define actions to perform upon successful builds (e.g., send notifications)
+        }
+        failure {
+            // Optional: Define actions to perform upon failed builds (e.g., send notifications)
+        }
+    }
+}
