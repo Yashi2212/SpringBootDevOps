@@ -20,7 +20,7 @@ class SpringbootappDevOpsApplicationTests {
 	  private MockMvc mockMvc;
 
 	    @Test
-	    private void testGetHello() throws Exception {
+	     void testGetHello() throws Exception {
 	        mockMvc.perform(MockMvcRequestBuilders.get("/hello"))
 	                .andExpect(MockMvcResultMatchers.status().isOk())
 	                .andExpect(MockMvcResultMatchers.content().string("Hello, This is SpringBoot Project"));
